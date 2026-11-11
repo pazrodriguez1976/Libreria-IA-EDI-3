@@ -2,7 +2,7 @@
 // Clase base: todos los controladores heredan de esta
 class Controller
 {
-    // Muestra una vista dentro de la plantilla general (con menú lateral)
+    // Muestra una vista dentro de la plantilla general 
     protected function vista(string $nombre, array $datos = []): void
     {
         extract($datos);
@@ -10,7 +10,7 @@ class Controller
         require __DIR__ . '/../app/views/layout.php';
     }
 
-    // Muestra una vista sola, sin menú (se usa en el login)
+    // Muestra una vista sola, sin menu
     protected function vistaSola(string $nombre, array $datos = []): void
     {
         extract($datos);

@@ -1,9 +1,9 @@
 <?php
-// Puerta de entrada: todos los pedidos pasan por acá
+// Puerta de entrada: todos los pedidos pasan por aca
 date_default_timezone_set('America/Argentina/Buenos_Aires');
 session_start();
 
-// Carga automática de clases (core, modelos y controladores)
+// Carga automatica de clases 
 spl_autoload_register(function ($clase) {
     foreach (['core', 'app/models', 'app/controllers'] as $carpeta) {
         $archivo = __DIR__ . "/../$carpeta/$clase.php";
@@ -14,7 +14,6 @@ spl_autoload_register(function ($clase) {
     }
 });
 
-// Tabla de rutas: "MÉTODO /ruta" => [Controlador, acción]
 $rutas = [
     'GET /login'        => ['AuthController', 'formulario'],
     'POST /login'       => ['AuthController', 'ingresar'],

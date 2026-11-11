@@ -1,10 +1,5 @@
 <?php
-/*
- * Lee la lista de precios del proveedor (.xlsx o .csv) y devuelve
- * [codigo => ['nombre' => ..., 'sin_iva' => ..., 'con_iva' => ...]].
- * Un .xlsx es un archivo comprimido con XML adentro, por eso se lee
- * con ZipArchive y SimpleXML, sin librerías externas.
- */
+
 class LectorLista
 {
     public static function leer(string $ruta, string $nombreOriginal): array
@@ -20,7 +15,7 @@ class LectorLista
         return self::armarLista($filas);
     }
 
-    // Busca la fila de títulos y, a partir de ahí, arma la lista por código
+    // Busca la fila de titulos y, a partir de ahi, arma la lista por codigo
     private static function armarLista(array $filas): array
     {
         $columnas = null;
@@ -53,7 +48,7 @@ class LectorLista
         return $lista;
     }
 
-    // Devuelve en qué columna está cada dato, o null si la fila no es la de títulos
+    // Devuelve en que columna está cada dato, o null si la fila no es la de titulos
     private static function detectarColumnas(array $fila): ?array
     {
         $columnas = ['codigo' => null, 'nombre' => null, 'sin_iva' => null, 'con_iva' => null];
@@ -78,7 +73,7 @@ class LectorLista
     private static function limpiarCodigo($valor): string
     {
         $valor = trim((string) $valor);
-        // Excel a veces guarda los códigos como número (ej. 7.79E+12)
+        // Excel a veces guarda los codigos como número
         if (is_numeric($valor) && (stripos($valor, 'e') !== false || str_contains($valor, '.'))) {
             $valor = number_format((float) $valor, 0, '', '');
         }
@@ -89,7 +84,6 @@ class LectorLista
     {
         $valor = trim((string) $valor);
         if (str_contains($valor, ',')) {
-            // Formato argentino: 1.234,56
             $valor = str_replace(',', '.', str_replace('.', '', $valor));
         }
         return is_numeric($valor) ? (float) $valor : 0.0;
@@ -118,7 +112,7 @@ class LectorLista
             throw new Exception('No se pudo abrir el Excel. Revisá que no esté dañado.');
         }
 
-        // Los textos del Excel están aparte, en una tabla de textos compartidos
+        // Los textos del Excel estan aparte, en una tabla de textos compartidos
         $textos = [];
         $xmlTextos = $zip->getFromName('xl/sharedStrings.xml');
         if ($xmlTextos !== false) {
